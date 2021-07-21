@@ -1,0 +1,27 @@
+base:
+  project: pneumonia-detection
+  image_size: [224, 224]
+  output: 2
+
+# data_source:
+#   s3_source: data_given/winequality.csv
+
+load_data:
+  train_path: data/train
+  test_path: data/test
+
+estimators:
+  VGG16:
+    params:
+      input_shape: image_size + [3]
+      weights: imagenet
+
+
+
+model_dir: saved_models
+
+#reports:
+  #params: report/params.json
+  #scores: report/scores.json
+
+# webapp_model_dir: prediction_service/model/model.joblib
