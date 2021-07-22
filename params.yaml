@@ -13,12 +13,20 @@ load_data:
 estimators:
   VGG16:
     params:
-      input_shape: image_size + [3]
+      input_shape:  [224, 224, 3]
       weights: imagenet
+      activation: softmax
+      loss: binary_crossentropy
+      optimizer: adam
+      metrics: accuracy
+
+prediction:
+  normal_img_path: data/test/NORMAL/IM-0011-0001-0001.jpeg
+  pneumo_img_path: data/test/PNEUMONIA/person1_virus_9.jpeg
 
 
 
-model_dir: saved_models
+model_dir: saved_models/
 
 #reports:
   #params: report/params.json

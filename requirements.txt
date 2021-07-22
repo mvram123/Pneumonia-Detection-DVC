@@ -1,2 +1,5 @@
 dvc
 dvc[gdrive]
+numpy
+tensorflow
+pillow
