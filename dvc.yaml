@@ -13,6 +13,7 @@ stages:
     deps:
     - data/train
     - data/test
+    - src/data_preprocessing.py
     - src/training.py
     params:
     - estimators.VGG16.params.input_shape
