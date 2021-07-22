@@ -80,7 +80,7 @@ def training_model(config_path):
         validation_steps=len(test_set)
     )
 
-    model.save(os.path.join('saved_models', 'trail.h5'))
+    model.save(os.path.join('models_saved', 'trail.h5'))
 
 
 if __name__ == "__main__":

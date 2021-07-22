@@ -17,8 +17,7 @@ estimators:
       weights: imagenet
       activation: softmax
       loss: binary_crossentropy
-      optimizer: adam
-      metrics: accuracy
+
 
 prediction:
   normal_img_path: data/test/NORMAL/IM-0011-0001-0001.jpeg
@@ -26,7 +25,7 @@ prediction:
 
 
 
-model_dir: saved_models/
+model_dir: models_saved/
 
 #reports:
   #params: report/params.json
