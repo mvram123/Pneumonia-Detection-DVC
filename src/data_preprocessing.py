@@ -17,32 +17,32 @@ def pre_processing(config_path):
     train_path = config['load_data']['train_path']
     test_path = config['load_data']['test_path']
 
-    rescale = config['preprocessing']['Image_Data_Generator']['rescale']
     shear_range = config['preprocessing']['Image_Data_Generator']['shear_range']
     zoom_range = config['preprocessing']['Image_Data_Generator']['zoom_range']
-    horizontal_flip = config['preprocessing']['Image_Data_Generator']['horizontal_flip']
 
-    target_size = config['preprocessing']['target_size']
     batch_size = config['preprocessing']['batch_size']
     class_mode = config['preprocessing']['class_mode']
 
-    train_datagen = ImageDataGenerator(rescale=rescale,
+    train_datagen = ImageDataGenerator(rescale=1. / 255,
                                        shear_range=shear_range,
                                        zoom_range=zoom_range,
-                                       horizontal_flip=horizontal_flip)
+                                       horizontal_flip=True)
 
-    test_datagen = ImageDataGenerator(rescale=rescale)
+    test_datagen = ImageDataGenerator(rescale=1. / 255)
 
+    # Make sure you provide the same target size as initialied for the image size
+    # YAML NOT RETURNING TUPLES
     training_set = train_datagen.flow_from_directory(train_path,
-                                                     target_size=target_size,
+                                                     target_size=(224, 224),
                                                      batch_size=batch_size,
                                                      class_mode=class_mode)
+
     test_set = test_datagen.flow_from_directory(test_path,
-                                                target_size=target_size,
+                                                target_size=(224, 224),
                                                 batch_size=batch_size,
                                                 class_mode=class_mode)
 
-    return [training_set, test_set]
+    return training_set, test_set
 
 
 if __name__ == "__main__":

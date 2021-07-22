@@ -8,6 +8,7 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.models import Sequential
 
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 from tensorflow.keras.applications.vgg16 import VGG16
 from tensorflow.keras.applications.vgg16 import preprocess_input
@@ -29,8 +30,7 @@ def training_model(config_path):
 
     output = config['base']['output']
 
-    training_set = pre_processing(config_path)[0]
-    test_set = pre_processing(config_path)[1]
+    # train_data, test_data = pre_processing(config_path=config_path)
 
     # Downloading VGG16 Model
     vgg = VGG16(input_shape=input_shape,
@@ -51,14 +51,13 @@ def training_model(config_path):
         metrics=[metrics]
     )
 
-    model.fit_generator(training_set,
-                        steps_per_epoch=len(training_set),
-                        epochs=1,
-                        verbose=1,
-                        validation_data=test_set,
-                        validation_steps=len(test_set))
+    training_set, test_set = pre_processing(config_path=config_path)
 
-    model.save(os.path.join('models_saved', 'trail.h5'))
+    history = model.fit(training_set,
+                        validation_data=test_set,
+                        epochs=1,
+                        steps_per_epoch=len(training_set),
+                        validation_steps=len(test_set))
 
 
 if __name__ == "__main__":
