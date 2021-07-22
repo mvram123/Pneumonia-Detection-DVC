@@ -1,18 +1,7 @@
-import os
 import argparse
-
-# Importing Tensorflow and Keras Libraries
-
 from tensorflow.keras.layers import Input, Lambda, Dense, Flatten
 from tensorflow.keras.models import Model
-from tensorflow.keras.preprocessing import image
-from tensorflow.keras.models import Sequential
-
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
-
 from tensorflow.keras.applications.vgg16 import VGG16
-from tensorflow.keras.applications.vgg16 import preprocess_input
-
 from data_preprocessing import read_params, pre_processing
 
 
