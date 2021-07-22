@@ -10,6 +10,21 @@ load_data:
   train_path: data/train
   test_path: data/test
 
+
+preprocessing:
+
+  Image_Data_Generator:
+
+    rescale: 1. / 255
+    shear_range: 0.2
+    zoom_range: 0.2
+    horizontal_flip: True
+
+  target_size: (224, 224)
+  batch_size: 32
+  class_mode: categorical
+
+
 estimators:
   VGG16:
     params:
@@ -17,6 +32,8 @@ estimators:
       weights: imagenet
       activation: softmax
       loss: binary_crossentropy
+      optimizer: adam
+      metrics: accuracy
 
 
 prediction:
