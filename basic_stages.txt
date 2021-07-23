@@ -3,7 +3,7 @@
 In data validation i need to see the folder name,
 image name, duplicate files, image format
 
-2. data pre processing
+2. data pre processing - done
 
 in pre processing, i need to do image augmentation,
 i need to create a image generator object

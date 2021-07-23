@@ -23,6 +23,7 @@ preprocessing:
 
 
 estimators:
+
   VGG16:
     params:
       input_shape:  [224, 224, 3]
@@ -32,6 +33,10 @@ estimators:
       optimizer: adam
       metrics: accuracy
 
+  store:
+    model_summary_path: reports/model_summary
+    metrics_path : reports/metrics
+
 
 prediction:
   normal_img_path: data/test/NORMAL/IM-0011-0001-0001.jpeg
@@ -39,7 +44,7 @@ prediction:
 
 
 
-model_dir: models_saved/
+model_dir: models_saved
 
 #reports:
   #params: report/params.json
