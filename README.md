@@ -1,4 +1,4 @@
-## Pneumonia detection using RESNET 50 and VGG 16
+## Pneumonia detection using VGG 16
 
 - Completed upto web app creation
 
