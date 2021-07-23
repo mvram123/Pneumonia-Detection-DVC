@@ -19,25 +19,22 @@ time taken for training, - done
 optional plots of loss, accuracy, time taken and val_loss
 
 
-4. evaluation
+4. evaluation - done
 
 in evaluation, take all images from test and predict the output,
 return classification report,
 f1- score and accuracy
 
-5. prediction_service
 
-in prediction_service, we will provide option for predictions
-
-6. web app
+5. web app
 
 in web app, we create static , template folders and we use our developed model for predictions
 
-7. creating expections and testing
+6. creating expections and testing
 
 we will do some basic testing like passing incorrect notation images, from which dir etc
 
-8.  ci-cd pipeline
+7.  ci-cd pipeline
 
 in this we need to create ci-cd.yaml file and exceptions file
 
