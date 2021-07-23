@@ -1,4 +1,5 @@
 import os
+import json
 import time
 from datetime import datetime
 import argparse
@@ -32,15 +33,13 @@ def training_model(config_path):
     loss = config['estimators']['VGG16']['params']['loss']
     optimizer = config['estimators']['VGG16']['params']['optimizer']
     metrics = config['estimators']['VGG16']['params']['metrics']
+    epochs = config['estimators']['VGG16']['params']['epochs']
 
-    model_summary_path = config['estimators']['store']['model_summary_path']
-    metrics_path = config['estimators']['store']['metrics_path']
+    model_summary_path = config['reports']['model_summary_path']
 
     model_dir = config['model_dir']
 
     output = config['base']['output']
-
-    # train_data, test_data = pre_processing(config_path=config_path)
 
     # Downloading VGG16 Model
     vgg = VGG16(input_shape=input_shape,
@@ -63,7 +62,7 @@ def training_model(config_path):
 
     # Current datetime
     dt_string = datetime.now().strftime("%d-%m-%Y_%H:%M:%S")
-    file_name = 'model_sum_'+ dt_string + '.txt'
+    file_name = 'model_sum_' + dt_string + '.txt'
 
     # Saving Model Summary in a file
     with open(os.path.join(model_summary_path, file_name), 'w') as f:
@@ -74,18 +73,51 @@ def training_model(config_path):
     time_callback = TimeHistory()
     history = model.fit(training_set,
                         validation_data=test_set,
-                        epochs=1,
+                        epochs=epochs,
                         callbacks=[time_callback],
                         steps_per_epoch=len(training_set),
                         validation_steps=len(test_set))
 
+    # Time Taken
     time_taken_for_execution = sum(time_callback.times)
-
-    print(f'time taken : {time_taken_for_execution}')
 
     # Saving Model
     model_name = 'model_' + dt_string + '.h5'
     model.save(os.path.join(model_dir, model_name))
+
+    # Saving Metrics and Params
+
+    model_loss = history.history['loss'][epochs - 1]
+    model_accuracy = history.history['accuracy'][epochs - 1]
+
+    scores_file = config["reports"]["scores_path"]
+    params_file = config["reports"]["params_path"]
+
+    with open(scores_file, "w") as f:
+
+        scores = {
+            "model_name": model_name,
+            "time_taken": time_taken_for_execution,
+            "loss": model_loss,
+            "accuracy": model_accuracy
+        }
+
+        json.dump(scores, f, indent=4)
+
+    with open(params_file, "w") as f:
+
+        params = {
+            "model_name": model_name,
+            "input_shape": input_shape,
+            "weights": weights,
+            "activation": activation,
+            "loss": loss,
+            "optimizer": optimizer,
+            "metrics": metrics,
+            "epochs": epochs,
+        }
+
+        json.dump(params, f, indent=4)
 
 
 if __name__ == "__main__":
