@@ -3,6 +3,8 @@
 In data validation i need to see the folder name,
 image name, duplicate files, image format
 
+***********************************
+
 2. data pre processing - DONE
 
 in pre processing, i need to do image augmentation,
@@ -26,9 +28,13 @@ return classification report,
 f1- score and accuracy
 
 
-5. web app
+5. web app - done
 
 in web app, we create static , template folders and we use our developed model for predictions
+
+
+***********************************
+
 
 6. creating expections and testing
 
@@ -38,3 +44,7 @@ we will do some basic testing like passing incorrect notation images, from which
 
 in this we need to create ci-cd.yaml file and exceptions file
 
+
+we tracked data, models
+
+we need to update dvc.yaml
