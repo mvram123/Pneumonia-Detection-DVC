@@ -1,6 +1,5 @@
 import yaml
 import argparse
-
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 

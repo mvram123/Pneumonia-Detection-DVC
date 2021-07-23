@@ -4,7 +4,7 @@ import time
 from datetime import datetime
 import argparse
 from tensorflow import keras
-from tensorflow.keras.layers import Input, Lambda, Dense, Flatten
+from tensorflow.keras.layers import Dense, Flatten
 from tensorflow.keras.models import Model
 from tensorflow.keras.applications.vgg16 import VGG16
 from data_preprocessing import read_params, pre_processing

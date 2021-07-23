@@ -4,7 +4,7 @@ import json
 from glob import glob
 import numpy as np
 from sklearn.metrics import confusion_matrix,precision_score, recall_score, f1_score
-from tensorflow.keras.models import Model, load_model
+from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.vgg16 import preprocess_input
 from data_preprocessing import read_params
