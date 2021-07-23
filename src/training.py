@@ -1,3 +1,4 @@
+import time
 import argparse
 from tensorflow.keras.layers import Input, Lambda, Dense, Flatten
 from tensorflow.keras.models import Model
@@ -47,6 +48,8 @@ def training_model(config_path):
                         epochs=1,
                         steps_per_epoch=len(training_set),
                         validation_steps=len(test_set))
+
+
 
 
 if __name__ == "__main__":
