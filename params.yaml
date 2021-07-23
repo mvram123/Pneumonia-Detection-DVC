@@ -34,6 +34,10 @@ estimators:
       metrics: accuracy
       epochs: 1
 
+evaluation:
+
+  model_path: models_saved/model_23-07-2021_11:20:19.h5
+
 
 prediction:
   normal_img_path: data/test/NORMAL/IM-0011-0001-0001.jpeg
@@ -47,5 +51,6 @@ reports:
     model_summary_path: reports/model_summary
     params_path: reports/metrics/params.json
     scores_path: reports/metrics/scores.json
+    metric_path: reports/metrics/metric.json
 
 # webapp_model_dir: prediction_service/model/model.joblib
