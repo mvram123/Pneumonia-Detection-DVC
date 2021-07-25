@@ -5,25 +5,51 @@ stages:
     deps:
       - data/train
       - data/test
-      - src/training.py
+      - src/data_preprocessing.py
 
 
   training:
     cmd: python src/training.py --config=params.yaml
+
     deps:
-    - data/train
-    - data/test
-    - src/data_preprocessing.py
-    - src/training.py
+      - data/train
+      - data/test
+      - src/data_preprocessing.py
+      - src/training.py
+
     params:
-    - estimators.VGG16.params.input_shape
-    - estimators.VGG16.params.weights
+      - estimators.VGG16.params.input_shape
+      - estimators.VGG16.params.weights
+      - estimators.VGG16.params.activation
+      - estimators.VGG16.params.loss
+      - estimators.VGG16.params.optimizer
+      - estimators.VGG16.params.metrics
+      - estimators.VGG16.params.epochs
+
     metrics:
-    - report/scores.json:
-        cache: false
-    - report/params.json:
-        cache: false
+      - report/metrics/scores.json:
+          cache: false
+      - report/metrics/params.json:
+          cache: false
+
     outs:
-    - saved_models
+      - models_saved
+
+  evaluation:
+    cmd: python src/evaluation.py --config=params.yaml
+
+    deps:
+      - data/test
+      - models_saved/model_23-07-2021_11:20:19.h5
+      - src/data_preprocessing.py
+
+    metrics:
+      - report/metrics/metric.json:
+          cache: false
+
+
+
+
+
 
 

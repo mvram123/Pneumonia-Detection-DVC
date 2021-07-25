@@ -83,7 +83,8 @@ def training_model(config_path):
 
     # Saving Model
     model_name = 'model_' + dt_string + '.h5'
-    model.save(os.path.join(model_dir, model_name))
+    model_path = os.path.join(model_dir, model_name)
+    model.save(model_path)
 
     # Saving Metrics and Params
 
@@ -93,31 +94,45 @@ def training_model(config_path):
     scores_file = config["reports"]["scores_path"]
     params_file = config["reports"]["params_path"]
 
+    # Writing Scores file
+
+    with open(scores_file, "r") as f:
+        data = json.load(f)
+
+    model_scores = {
+        "model_name": model_name,
+        "model_path": model_path,
+        "time_taken": time_taken_for_execution,
+        "loss": model_loss,
+        "accuracy": model_accuracy
+    }
+
+    data['model_scores'].append(model_scores)
+
     with open(scores_file, "w") as f:
 
-        scores = {
-            "model_name": model_name,
-            "time_taken": time_taken_for_execution,
-            "loss": model_loss,
-            "accuracy": model_accuracy
-        }
+        json.dump(data, f, indent=4)
 
-        json.dump(scores, f, indent=4)
+    # Writing in Params file
+
+    with open(params_file, "r") as f:
+        data_params = json.load(f)
+
+    model_params = {
+        "model_name": model_name,
+        "input_shape": input_shape,
+        "weights": weights,
+        "activation": activation,
+        "loss": loss,
+        "optimizer": optimizer,
+        "metrics": metrics,
+        "epochs": epochs,
+    }
+
+    data_params['model_params'].append(model_params)
 
     with open(params_file, "w") as f:
-
-        params = {
-            "model_name": model_name,
-            "input_shape": input_shape,
-            "weights": weights,
-            "activation": activation,
-            "loss": loss,
-            "optimizer": optimizer,
-            "metrics": metrics,
-            "epochs": epochs,
-        }
-
-        json.dump(params, f, indent=4)
+        json.dump(data_params, f, indent=4)
 
 
 if __name__ == "__main__":

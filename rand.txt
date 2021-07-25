@@ -1,0 +1,60 @@
+# Trail Scores
+
+with open("scores.json", "r") as f:
+    data = json.load(f)
+
+model_scores = {
+    "model_name": 'model_1',
+    "time_taken": 23,
+    "loss": 0.2,
+    "accuracy": 89.12
+}
+
+data['model_scores'].append(model_scores)
+
+with open("scores.json", "w") as f:
+    json.dump(data, f, indent=4)
+
+
+# Trail Params
+
+with open("params.json", "r") as f:
+    data = json.load(f)
+
+
+model_params = {
+            "model_name": 'model_trail',
+            "input_shape": [223.223],
+            "weights": 'imagenet',
+            "activation": 'adam',
+            "loss": 'binary_catestrophy',
+            "optimizer": 'adam',
+            "metrics": 1,
+            "epochs": 1,
+        }
+
+data['model_params'].append(model_params)
+
+with open("params.json", "w") as f:
+    json.dump(data, f, indent=4)
+
+
+# Trail Metrics
+
+with open("metric.json", "r") as f:
+    data = json.load(f)
+
+model_metric = {
+            "model_name": 'model_trail',
+            "confusion_matrix": 1,
+            "precision": 1,
+            "recall": 1,
+            "f1_score": 1
+        }
+
+data['model_metric'].append(model_metric)
+
+with open("metric.json", "w") as f:
+    json.dump(data, f, indent=4)
+
+

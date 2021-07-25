@@ -1,0 +1,16 @@
+schema: '2.0'
+stages:
+  data_preprocessing:
+    cmd: python src/data_preprocessing.py --config=params.yaml
+    deps:
+    - path: data/test
+      md5: 7819ee43c3d23c3fd7b8c05f003cd0fa.dir
+      size: 79062947
+      nfiles: 627
+    - path: data/train
+      md5: ab9f257661d10225d37b791094e0ff98.dir
+      size: 980700277
+      nfiles: 3219
+    - path: src/data_preprocessing.py
+      md5: 3240be5376cf944b6caab4a81e86d6fe
+      size: 1920

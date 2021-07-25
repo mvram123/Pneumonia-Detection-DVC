@@ -13,7 +13,13 @@ from data_preprocessing import read_params
 def evaluate_model(config_path):
 
     config = read_params(config_path=config_path)
-    model_path = config['evaluation']['model_path']
+
+    # Reading Model Path
+
+    with open("reports/metrics/scores.json", "r") as f:
+        data = json.load(f)
+    model_path = data['model_scores'][-1]['model_path']
+
     test_path = config['load_data']['test_path']
     paths = ['NORMAL/*', 'PNEUMONIA/*']
     true_outputs = []
@@ -49,16 +55,19 @@ def evaluate_model(config_path):
 
     metric_file = config["reports"]["metric_path"]
 
+    with open(metric_file, "r") as f:
+        data = json.load(f)
+
+    model_metric = {
+        "confusion_matrix": confusion_matrix(true_outputs, predicted_outputs).tolist(),
+        "precision": precision_score(true_outputs, predicted_outputs),
+        "recall": recall_score(true_outputs, predicted_outputs),
+        "f1_score": f1_score(true_outputs, predicted_outputs)
+    }
+
+    data['model_metric'].append(model_metric)
     with open(metric_file, "w") as f:
-
-        scores = {
-            "confusion_matrix": confusion_matrix(true_outputs, predicted_outputs).tolist(),
-            "precision": precision_score(true_outputs, predicted_outputs),
-            "recall": recall_score(true_outputs, predicted_outputs),
-            "f1_score": f1_score(true_outputs, predicted_outputs)
-        }
-
-        json.dump(scores, f, indent=4)
+        json.dump(data, f, indent=4)
 
 
 if __name__ == "__main__":
