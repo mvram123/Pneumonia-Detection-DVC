@@ -8,7 +8,7 @@ stages:
       - src/data_preprocessing.py
 
 
-  training:
+  train:
     cmd: python src/training.py --config=params.yaml
 
     deps:
@@ -16,6 +16,7 @@ stages:
       - data/test
       - src/data_preprocessing.py
       - src/training.py
+      - models_saved
 
     params:
       - estimators.VGG16.params.input_shape
@@ -40,7 +41,7 @@ stages:
 
     deps:
       - data/test
-      - models_saved/model_23-07-2021_11:20:19.h5
+      - models_saved
       - src/data_preprocessing.py
 
     metrics:

@@ -27,6 +27,34 @@
             "optimizer": "adam",
             "metrics": "accuracy",
             "epochs": 1
+        },
+        {
+            "model_name": "model_25-07-2021_19:59:35.h5",
+            "input_shape": [
+                224,
+                224,
+                3
+            ],
+            "weights": "imagenet",
+            "activation": "softmax",
+            "loss": "binary_crossentropy",
+            "optimizer": "adam",
+            "metrics": "accuracy",
+            "epochs": 1
+        },
+        {
+            "model_name": "model_25-07-2021_20:21:46.h5",
+            "input_shape": [
+                224,
+                224,
+                3
+            ],
+            "weights": "imagenet",
+            "activation": "softmax",
+            "loss": "binary_crossentropy",
+            "optimizer": "adam",
+            "metrics": "accuracy",
+            "epochs": 1
         }
     ]
 }
