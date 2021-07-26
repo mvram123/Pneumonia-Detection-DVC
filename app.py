@@ -3,7 +3,7 @@ import os
 import json
 from flask import Flask, request, render_template
 from werkzeug.utils import secure_filename
-from src.prediction import prediction
+from prediction import prediction
 
 # Reading Model Path
 

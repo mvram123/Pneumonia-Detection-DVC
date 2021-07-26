@@ -3,6 +3,5 @@ dvc[gdrive]
 numpy
 tensorflow
 pillow
-sklearn
 flask
 gunicorn
