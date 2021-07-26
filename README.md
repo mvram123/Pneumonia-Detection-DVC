@@ -1,6 +1,6 @@
 ## Pneumonia detection using VGG 16
 
-- Completed upto web app creation
+- Completed all the stages
 
-- Tommarrow update dvc.yaml, exception handling and testing, ci-cd.yaml
+- CI - CD.yaml file remaining
 
