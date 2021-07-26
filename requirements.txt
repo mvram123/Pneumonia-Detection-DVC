@@ -5,3 +5,4 @@ tensorflow
 pillow
 sklearn
 flask
+gunicorn
