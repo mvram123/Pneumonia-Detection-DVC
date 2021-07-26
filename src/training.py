@@ -82,7 +82,7 @@ def training_model(config_path):
     time_taken_for_execution = sum(time_callback.times)
 
     # Saving Model
-    model_name = 'model_' + dt_string + '.h5'
+    model_name = 'model.h5'
     model_path = os.path.join(model_dir, model_name)
     model.save(model_path)
 

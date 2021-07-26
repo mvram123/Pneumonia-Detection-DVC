@@ -8,7 +8,7 @@ stages:
       - src/data_preprocessing.py
 
 
-  train:
+  training:
     cmd: python src/training.py --config=params.yaml
 
     deps:
@@ -16,7 +16,8 @@ stages:
       - data/test
       - src/data_preprocessing.py
       - src/training.py
-      - models_saved
+      - reports/metrics/scores.json
+      - reports/metrics/params.json
 
     params:
       - estimators.VGG16.params.input_shape
@@ -27,14 +28,8 @@ stages:
       - estimators.VGG16.params.metrics
       - estimators.VGG16.params.epochs
 
-    metrics:
-      - report/metrics/scores.json:
-          cache: false
-      - report/metrics/params.json:
-          cache: false
-
     outs:
-      - models_saved
+      - models_saved/model.h5
 
   evaluation:
     cmd: python src/evaluation.py --config=params.yaml
@@ -43,10 +38,8 @@ stages:
       - data/test
       - models_saved
       - src/data_preprocessing.py
+      - reports/metrics/metric.json
 
-    metrics:
-      - report/metrics/metric.json:
-          cache: false
 
 
 

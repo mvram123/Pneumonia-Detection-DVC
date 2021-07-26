@@ -14,3 +14,59 @@ stages:
     - path: src/data_preprocessing.py
       md5: 3240be5376cf944b6caab4a81e86d6fe
       size: 1920
+  training:
+    cmd: python src/training.py --config=params.yaml
+    deps:
+    - path: data/test
+      md5: 7819ee43c3d23c3fd7b8c05f003cd0fa.dir
+      size: 79062947
+      nfiles: 627
+    - path: data/train
+      md5: ab9f257661d10225d37b791094e0ff98.dir
+      size: 980700277
+      nfiles: 3219
+    - path: reports/metrics/params.json
+      md5: 9b32d5657560e30211af28d1c03c0213
+      size: 400
+    - path: reports/metrics/scores.json
+      md5: a7484f1b935daa2ac8571c0a48229d77
+      size: 268
+    - path: src/data_preprocessing.py
+      md5: 3240be5376cf944b6caab4a81e86d6fe
+      size: 1920
+    - path: src/training.py
+      md5: d6383582ddf3c620086b24cd7da49525
+      size: 4101
+    params:
+      params.yaml:
+        estimators.VGG16.params.activation: softmax
+        estimators.VGG16.params.epochs: 1
+        estimators.VGG16.params.input_shape:
+        - 224
+        - 224
+        - 3
+        estimators.VGG16.params.loss: binary_crossentropy
+        estimators.VGG16.params.metrics: accuracy
+        estimators.VGG16.params.optimizer: adam
+        estimators.VGG16.params.weights: imagenet
+    outs:
+    - path: models_saved/model.h5
+      md5: 2b1ee6090f8431740c5bcf4193a80b21
+      size: 59540304
+  evaluation:
+    cmd: python src/evaluation.py --config=params.yaml
+    deps:
+    - path: data/test
+      md5: 7819ee43c3d23c3fd7b8c05f003cd0fa.dir
+      size: 79062947
+      nfiles: 627
+    - path: models_saved
+      md5: 62fd7b7e58da8264e5e60f5e53d71310.dir
+      size: 59540314
+      nfiles: 2
+    - path: reports/metrics/metric.json
+      md5: 5e57a63a3936438dafb32f8853b196df
+      size: 400
+    - path: src/data_preprocessing.py
+      md5: 3240be5376cf944b6caab4a81e86d6fe
+      size: 1920

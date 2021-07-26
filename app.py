@@ -1,15 +1,18 @@
 from __future__ import division, print_function
 import os
-from tensorflow.keras.models import load_model
+import json
 from flask import Flask, request, render_template
 from werkzeug.utils import secure_filename
 from src.prediction import prediction
 
+# Reading Model Path
+
+with open("reports/metrics/scores.json", "r") as f:
+    data = json.load(f)
+MODEL_PATH = data['model_scores'][-1]['model_path']
+
 # Define a flask app
 app = Flask(__name__)
-
-# Model saved with Keras model.save()
-MODEL_PATH = 'models_saved/model_23-07-2021_11:20:19.h5'
 
 
 @app.route('/', methods=['GET'])
