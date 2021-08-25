@@ -1,7 +1,6 @@
-dvc
+dvc==2.5.4
 dvc[gdrive]
-numpy
-tensorflow-cpu
-pillow
-flask
-gunicorn
+numpy==1.19.5
+tensorflow==2.4.1
+flask==2.0.1
+gunicorn==20.1.0

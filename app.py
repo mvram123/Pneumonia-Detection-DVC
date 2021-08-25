@@ -9,6 +9,7 @@ from prediction import prediction
 
 with open("reports/metrics/scores.json", "r") as f:
     data = json.load(f)
+
 MODEL_PATH = data['model_scores'][-1]['model_path']
 
 # Define a flask app
