@@ -1,52 +1,47 @@
-from __future__ import division, print_function
-import os
-import json
-from flask import Flask, request, render_template
-from werkzeug.utils import secure_filename
-from prediction import prediction
+import tensorflow as tf
+import numpy as np
+import streamlit as st
+from PIL import Image
+import requests
+from io import BytesIO
 
-# Reading Model Path
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
 
-with open("reports/metrics/scores.json", "r") as f:
-    data = json.load(f)
-
-MODEL_PATH = data['model_scores'][-1]['model_path']
-
-# Define a flask app
-app = Flask(__name__)
+st.set_option('deprecation.showfileUploaderEncoding', False)
+st.title("Pnuemonia Detection Image Classifier")
+st.text("Provide URL of Chest Xray for Pneumonia Detection")
 
 
-@app.route('/', methods=['GET'])
-def index():
-    # Main page
-    return render_template('index.html')
+@st.cache(allow_output_mutation=True)
+def load_model():
+    model = tf.keras.models.load_model('models_saved/model.h5')
+    return model
 
 
-@app.route('/predict', methods=['POST'])
-def upload():
-    # Get the file from post request
+with st.spinner('Loading Model Into Memory....'):
+  model = load_model()
 
-    f = request.files['file']
-    print(f.filename)
-
-    # Save the file to ./uploads
-
-    base_path = os.path.dirname(__file__)
-    print("base path obtained")
-
-    if 'n' in f.filename:
-        file_path = os.path.join(base_path, 'data/test/NORMAL', secure_filename(f.filename))
-    else:
-        file_path = os.path.join(base_path, 'data/test/PNEUMONIA', secure_filename(f.filename))
-
-    print(file_path)
-    print('Model Prediction started')
-
-    # Make prediction
-    output = prediction(img_path=file_path, model_path=MODEL_PATH)
-
-    return output
+classes = ['Pneumonia', 'Healthy']
 
 
-if __name__ == '__main__':
-    app.run(port=5001, debug=True)
+def decode_img(image):
+    img = tf.image.decode_jpeg(image, channels=3)
+    img = tf.image.resize(img, [224, 224])
+    return np.expand_dims(img, axis=0)
+
+
+path = st.text_input('Enter Image URL to Classify.. ',
+                     'https://raw.githubusercontent.com/mvram123/mvram123/main/p4.jpeg')
+if path is not None:
+    content = requests.get(path).content
+
+    st.write("Predicted Class :")
+    with st.spinner('classifying.....'):
+        label = np.argmax(model.predict(decode_img(content)), axis=1)
+    print(label)
+    st.write(classes[label[0]])
+    st.write("")
+    image = Image.open(BytesIO(content))
+    st.image(image, caption='Pneumonia Detection', use_column_width=True)
+
